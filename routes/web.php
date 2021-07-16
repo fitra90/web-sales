@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\StuffsController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,3 +16,21 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/logout', function () {
+    // session_destroy();
+    return redirect("/login");
+});
+
+Route::get('/login', function () {
+    return view('login');
+});
+
+// Route::get('/stuffs', function () {
+//     return view('stuffs');
+// });
+Route::get('/stuffs', [StuffsController::class, 'viewAll']);
+Route::get('/users', function () {
+    return view('users');
+});
+
