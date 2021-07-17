@@ -23,11 +23,11 @@ class UsersController extends Controller
 
     public function viewAll(Request $request)
     {
-        if ($request->session()->has('login')) {
+        if ($request->session()->has('login') &&  session('role') == 1) {
             $data = $this->getAll();
             return view('users', ['data' => $data]);
         } else {
-            return redirect('/login');
+            return redirect('/stuffs');
         }
     }
 
@@ -36,7 +36,7 @@ class UsersController extends Controller
         if ($request->session()->has('login') &&  session('role') == 1) {
             return view('form-user');
         } else {
-            return redirect('/users');
+            return redirect('/stuffs');
         }
     }
 
@@ -80,7 +80,7 @@ class UsersController extends Controller
             $data  = User::where('id', $id)->first();
             return view('form-user', ['data' => $data]);
         } else {
-            return redirect('/users');
+            return redirect('/stuffs');
         }
     }
 
@@ -99,7 +99,7 @@ class UsersController extends Controller
         if ($request->session()->has('login')) {
             return redirect('/stuffs');
         } else {
-            return redirect('/login');
+            return view('login');
         }
     }
 

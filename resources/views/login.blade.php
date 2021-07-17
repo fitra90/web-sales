@@ -82,19 +82,11 @@
 						</div>
 
 						<div class="row">
-							<div class="col-sm-8">
-								<div class="checkbox-custom checkbox-default">
-									<input id="RememberMe" name="rememberme" type="checkbox" />
-									<label for="RememberMe">Remember Me</label>
-								</div>
-							</div>
-							<div class="col-sm-4 text-right">
-								<button type="submit" class="btn btn-primary hidden-xs">Sign In</button>
+							<div class="col-sm-12">
+								<button type="submit" class="btn btn-primary" style="width:100%";>Sign In</button>
 							</div>
 						</div>
 						<br>
-						<br>
-
 					</form>
 				</div>
 			</div>
