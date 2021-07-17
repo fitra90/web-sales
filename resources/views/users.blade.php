@@ -1,6 +1,6 @@
 @extends('layout')
 @section('title', 'Users')
-@section('title_section', 'List of User')
+@section('title_section', 'List of Users')
 @section('content')
 
 <div class="row">

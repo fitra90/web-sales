@@ -7,9 +7,11 @@
 <div class="row">
     <div class="col-md-12">
         <section class="panel">
-            <header class="panel-heading">
-                <button class="btn btn-info" type="button" onclick="newStuff()">New Stuff</button>
-            </header>
+            @if(Session::get('role') == 1)
+                <header class="panel-heading">
+                    <button class="btn btn-info" type="button" onclick="newStuff()">New Stuff</button>
+                </header>
+            @endif
             <div class="panel-body">
                 <div class="table-responsive">
                     <table class="table table-striped mb-none">
@@ -19,7 +21,9 @@
                                 <th>Name</th>
                                 <th>Stock</th>
                                 <th>Status</th>
-                                <th>Action</th>
+                                @if(Session::get('role') == 1)
+                                    <th>Action</th>
+                                @endif
                             </tr>
                         </thead>
                         <tbody>
@@ -30,10 +34,12 @@
                                 <td>{{$stuff->name}}</td>
                                 <td>{{$stuff->stock}}</td>
                                 <td>{{$stuff->status == 1 ? "Available" : "Not Available"}}</td>
-                                <td>
-                                    <button class="btn btn-default" type="button" onclick='editStuff(<?= $stuff->id; ?>)'>Edit</button>
-                                    <button class="btn btn-danger" type="button" onclick='deleteStuff(<?= $stuff->id; ?>)'>Delete</button>
-                                </td>
+                                @if(Session::get('role') == 1)
+                                    <td>
+                                        <button class="btn btn-default" type="button" onclick='editStuff(<?= $stuff->id; ?>)'>Edit</button>
+                                        <button class="btn btn-danger" type="button" onclick='deleteStuff(<?= $stuff->id; ?>)'>Delete</button>
+                                    </td>
+                                @endif
                             </tr>
                             <?php $i++; ?>
                             @endforeach
@@ -71,7 +77,7 @@
             }
         }).done(function(response) {
             // console.log(response)
-            if(response) {
+            if (response) {
                 location.reload()
             } else {
                 alert("Failed to delete data");

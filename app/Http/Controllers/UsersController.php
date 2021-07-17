@@ -7,21 +7,37 @@ use App\Models\User;
 
 class UsersController extends Controller
 {
+    public function home(Request $request)
+    {
+        if ($request->session()->has('login')) {
+            return redirect('/stuffs');
+        } else {
+            return redirect('/login');
+        }
+    }
 
     public function getAll()
     {
         return User::all();
     }
 
-    public function viewAll()
+    public function viewAll(Request $request)
     {
-        $data = $this->getAll();
-        return view('users', ['data' => $data]);
+        if ($request->session()->has('login')) {
+            $data = $this->getAll();
+            return view('users', ['data' => $data]);
+        } else {
+            return redirect('/login');
+        }
     }
 
-    public function viewNew()
+    public function viewNew(Request $request)
     {
-        return view('form-user');
+        if ($request->session()->has('login') &&  session('role') == 1) {
+            return view('form-user');
+        } else {
+            return redirect('/users');
+        }
     }
 
     public function saveNew(Request $post)
@@ -58,10 +74,14 @@ class UsersController extends Controller
         }
     }
 
-    public function viewEdit($id)
+    public function viewEdit(Request $request, $id)
     {
-        $data  = User::where('id', $id)->first();
-        return view('form-user', ['data' => $data]);
+        if ($request->session()->has('login') && session('role') == 1) {
+            $data  = User::where('id', $id)->first();
+            return view('form-user', ['data' => $data]);
+        } else {
+            return redirect('/users');
+        }
     }
 
     public function delete($id)
@@ -73,6 +93,37 @@ class UsersController extends Controller
         } else {
             return false;
         }
+    }
+
+    public function login(Request $request) {
+        if ($request->session()->has('login')) {
+            return redirect('/stuffs');
+        } else {
+            return redirect('/login');
+        }
+    }
+
+    public function getLogin(Request $post)
+    {
+        $data = $post->input();
+        $user = User::where([['username', '=', $data['username']], ['password', '=', sha1($post['password'])]])->first();
+        if ($user && $user->status > 0 && $user->role == 2 && $user->status > 0) {
+
+            session(['username' => $user->username, 'role' => '2', 'name' => $user->name, 'login' => true]);
+            return redirect()->action([StuffsController::class, 'viewAll']);
+        } else if ($user && $user->status > 0 && $user->role == 1 && $user->status > 0) {
+            session(['username' => $user->username, 'role' => '1', 'name' => $user->name, 'login' => true]);
+            return redirect()->action([StuffsController::class, 'viewAll']);
+        } else {
+            session()->flash('error', '');
+            return redirect('/login');
+        }
+    }
+
+    public function logout(Request $request)
+    {
+        $request->session()->flush();
+        return redirect("/login");
     }
 
     public function index()

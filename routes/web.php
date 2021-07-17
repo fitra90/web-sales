@@ -13,20 +13,6 @@ use App\Http\Controllers\UsersController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('/logout', function () {
-    // session_destroy();
-    return redirect("/login");
-});
-
-Route::get('/login', function () {
-    return view('login');
-});
-
 // 
 //  stuff CRUD
 //
@@ -40,9 +26,17 @@ Route::delete('/delete-stuff/{id}', [StuffsController::class, 'delete']);
 // 
 //  user CRUD
 //
+Route::get('/', [UsersController::class, 'home']);
 Route::get('/users', [UsersController::class, 'viewAll']);
 Route::get('/new-user', [UsersController::class, 'viewNew']);
 Route::post('/save-new-user', [UsersController::class, 'saveNew']);
 Route::post('/save-edit-user/{id}', [UsersController::class, 'saveEdit']);
 Route::get('/edit-user/{id}', [UsersController::class, 'viewEdit']);
 Route::delete('/delete-user/{id}', [UsersController::class, 'delete']);
+
+//
+// Login & Logout
+//
+Route::get('/login', [UsersController::class, 'login']);
+Route::post('/process-login', [UsersController::class, 'getLogin']);
+Route::get('/logout', [UsersController::class, 'logout']);

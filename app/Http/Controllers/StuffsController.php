@@ -12,13 +12,22 @@ class StuffsController extends Controller
         return Stuff::all();
     }
 
-    public function viewAll() {
-        $data = $this->getAll();
-        return view('stuffs', ['data' => $data]);
+    public function viewAll(Request $request) {
+        if ($request->session()->has('login')) {
+            $data = $this->getAll();
+            return view('stuffs', ['data' => $data, 'session'=>$request->session()->all()]);
+        } else {
+            return redirect('/login');
+        }
     }
 
-    public function viewNew() {
-        return view('form-stuff');
+    public function viewNew(Request $request) {
+        if ($request->session()->has('login') && session('role') == 1) {
+            return view('form-stuff');
+            // return redirect('/login');
+        } else {
+            return redirect('/stuffs');
+        }
     }
     
     public function saveNew(Request $post) {
@@ -49,9 +58,13 @@ class StuffsController extends Controller
         }
     }
     
-    public function viewEdit($id) {
-        $data  = Stuff::where('id',$id)->first();
-        return view('form-stuff', ['data' => $data]);
+    public function viewEdit(Request $request, $id) {
+        if ($request->session()->has('login') &&  session('role') == 1) {
+            $data  = Stuff::where('id',$id)->first();
+            return view('form-stuff', ['data' => $data]);
+        } else {
+            return redirect('/stuffs');
+        }
     }
     
     public function delete($id) {

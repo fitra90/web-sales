@@ -59,8 +59,8 @@
 								<img src="/assets/images/!logged-user.jpg" alt="Joseph Doe" class="img-circle" data-lock-picture="/assets/images/!logged-user.jpg" />
 							</figure>
 							<div class="profile-info" data-lock-name="John Doe" data-lock-email="johndoe@okler.com">
-								<span class="name">John Doe Junior</span>
-								<span class="role">administrator</span>
+								<span class="name">{{Session::get('name')}}</span>
+								<span class="role">{{Session::get('role') == 1 ? "Administrator" : "Staff"}}</span>
 							</div>
 			
 							<i class="fa custom-caret"></i>
@@ -100,15 +100,17 @@
 									<li {!! Request::segment(1) == "stuffs" || Request::segment(1) == "new-stuff" || Request::segment(1) == "edit-stuff"?  "class='nav-active'" : "" !!}>
 										<a href="/stuffs">
                                             <i class="fa fa-table" aria-hidden="true"></i>
-											<span>Barang</span>
+											<span>Stuffs</span>
 										</a>
 									</li>
+									@if(Session::get('role') == 1)
 									<li {!! Request::segment(1) == "users" || Request::segment(1) == "new-user" || Request::segment(1) == "edit-user" ?  "class='nav-active'" : "" !!}>
 										<a href="/users">
                                             <i class="fa fa-table" aria-hidden="true"></i>
-											<span>User</span>
+											<span>Users</span>
 										</a>
 									</li>
+									@endif
 								</ul>
 							</nav>
 				
