@@ -17,22 +17,21 @@
 		<link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800|Shadows+Into+Light" rel="stylesheet" type="text/css">
 
 		<!-- Vendor CSS -->
-		<link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.css" />
-		<link rel="stylesheet" href="assets/vendor/font-awesome/css/font-awesome.css" />
-		<link rel="stylesheet" href="assets/vendor/magnific-popup/magnific-popup.css" />
-		<link rel="stylesheet" href="assets/vendor/bootstrap-datepicker/css/datepicker3.css" />
+		<link rel="stylesheet" href="/assets/vendor/bootstrap/css/bootstrap.css" />
+		<link rel="stylesheet" href="/assets/vendor/font-awesome/css/font-awesome.css" />
 
 		<!-- Theme CSS -->
-		<link rel="stylesheet" href="assets/stylesheets/theme.css" />
+		<link rel="stylesheet" href="/assets/stylesheets/theme.css" />
 
 		<!-- Skin CSS -->
-		<link rel="stylesheet" href="assets/stylesheets/skins/default.css" />
+		<link rel="stylesheet" href="/assets/stylesheets/skins/default.css" />
 
 		<!-- Theme Custom CSS -->
-		<link rel="stylesheet" href="assets/stylesheets/theme-custom.css">
+		<link rel="stylesheet" href="/assets/stylesheets/theme-custom.css">
 
 		<!-- Head Libs -->
-		<script src="assets/vendor/modernizr/modernizr.js"></script>
+		<script src="/assets/vendor/modernizr/modernizr.js"></script>
+		<script src="/assets/vendor/jquery/jquery.js"></script>
 
 	</head>
 	<body>
@@ -42,7 +41,7 @@
 			<header class="header">
 				<div class="logo-container">
 					<a href="../" class="logo">
-						<img src="assets/images/logo.png" height="35" alt="Porto Admin" />
+						<img src="/assets/images/logo.png" height="35" alt="Porto Admin" />
 					</a>
 					<div class="visible-xs toggle-sidebar-left" data-toggle-class="sidebar-left-opened" data-target="html" data-fire-event="sidebar-left-opened">
 						<i class="fa fa-bars" aria-label="Toggle sidebar"></i>
@@ -57,7 +56,7 @@
 					<div id="userbox" class="userbox">
 						<a href="#" data-toggle="dropdown">
 							<figure class="profile-picture">
-								<img src="assets/images/!logged-user.jpg" alt="Joseph Doe" class="img-circle" data-lock-picture="assets/images/!logged-user.jpg" />
+								<img src="/assets/images/!logged-user.jpg" alt="Joseph Doe" class="img-circle" data-lock-picture="/assets/images/!logged-user.jpg" />
 							</figure>
 							<div class="profile-info" data-lock-name="John Doe" data-lock-email="johndoe@okler.com">
 								<span class="name">John Doe Junior</span>
@@ -98,13 +97,13 @@
 						<div class="nano-content">
 							<nav id="menu" class="nav-main" role="navigation">
 								<ul class="nav nav-main">
-									<li {!! Request::segment(1) == "stuffs" ?  "class='nav-active'" : "" !!}>
+									<li {!! Request::segment(1) == "stuffs" || Request::segment(1) == "new-stuff" || Request::segment(1) == "edit-stuff"?  "class='nav-active'" : "" !!}>
 										<a href="/stuffs">
                                             <i class="fa fa-table" aria-hidden="true"></i>
 											<span>Barang</span>
 										</a>
 									</li>
-									<li {!! Request::segment(1) == "users" ?  "class='nav-active'" : "" !!}>
+									<li {!! Request::segment(1) == "users" || Request::segment(1) == "new-user" || Request::segment(1) == "edit-user" ?  "class='nav-active'" : "" !!}>
 										<a href="/users">
                                             <i class="fa fa-table" aria-hidden="true"></i>
 											<span>User</span>
@@ -136,22 +135,19 @@
 		</section>
 
 		<!-- Vendor -->
-		<script src="assets/vendor/jquery/jquery.js"></script>
-		<script src="assets/vendor/jquery-browser-mobile/jquery.browser.mobile.js"></script>
-		<script src="assets/vendor/bootstrap/js/bootstrap.js"></script>
-		<script src="assets/vendor/nanoscroller/nanoscroller.js"></script>
-		<script src="assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
-		<script src="assets/vendor/magnific-popup/magnific-popup.js"></script>
-		<script src="assets/vendor/jquery-placeholder/jquery.placeholder.js"></script>
+		<script src="/assets/vendor/jquery-browser-mobile/jquery.browser.mobile.js"></script>
+		<script src="/assets/vendor/bootstrap/js/bootstrap.js"></script>
+		<script src="/assets/vendor/nanoscroller/nanoscroller.js"></script>
+		<script src="/assets/vendor/jquery-placeholder/jquery.placeholder.js"></script>
 		
 		<!-- Theme Base, Components and Settings -->
-		<script src="assets/javascripts/theme.js"></script>
+		<script src="/assets/javascripts/theme.js"></script>
 		
 		<!-- Theme Custom -->
-		<script src="assets/javascripts/theme.custom.js"></script>
+		<script src="/assets/javascripts/theme.custom.js"></script>
 		
 		<!-- Theme Initialization Files -->
-		<script src="assets/javascripts/theme.init.js"></script>
+		<script src="/assets/javascripts/theme.init.js"></script>
 
 	</body>
 </html>

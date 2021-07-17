@@ -3,17 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use App\Models\Stuff;
 
 class StuffsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-
+    
     public function getAll() {
         return Stuff::all();
     }
@@ -23,21 +17,57 @@ class StuffsController extends Controller
         return view('stuffs', ['data' => $data]);
     }
 
+    public function viewNew() {
+        return view('form-stuff');
+    }
+    
+    public function saveNew(Request $post) {
+        $stuff = new Stuff;
+        $data = $post->input();
+        $stuff->name = $data['name'];
+        $stuff->stock = $data['stock'];
+        $stuff->status = $data['status'];
+        $save = $stuff->save();
+        if($save) {
+            return redirect('/stuffs');
+        } else{
+            return redirect('/new-stuff');
+        }
+    }
+    
+    public function saveEdit(Request $post, $id) {
+        $data = $post->input();
+        $update = Stuff::where('id', "=", $id)->update(array(
+            'name' => $data['name'],
+            'stock' => $data['stock'],
+            'status' => $data['status']
+        ));
+        if($update) {
+            return redirect('/stuffs');
+        } else{
+            return redirect('/edit-stuff/'.$id);
+        }
+    }
+    
+    public function viewEdit($id) {
+        $data  = Stuff::where('id',$id)->first();
+        return view('form-stuff', ['data' => $data]);
+    }
+    
+    public function delete($id) {
+        $data  = Stuff::where('id',$id)->first();
+        if ($data != null) {
+            $data->delete();
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public function index()
     {
         return Response($this->getAll());
 
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
     }
 
     /**
@@ -51,26 +81,5 @@ class StuffsController extends Controller
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
+   
 }
