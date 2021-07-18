@@ -49,7 +49,7 @@
                             <select id="role" name="role" class="form-control mb-md">
                                 <option value="2">&nbsp;</option>
                                 <option value="1" <?= isset($data) && $data->role == 1 ? "selected" : ""; ?>>Admin</option>
-                                <option value="2" <?= isset($data) && $data->role == 0 ? "selected" : ""; ?>>Staff</option>
+                                <option value="2" <?= isset($data) && $data->role == 2 ? "selected" : ""; ?>>Staff</option>
                             </select>
                             <span class="help-block">Leave this empty, user will be automatically registered as <b>Staff</b></span>
                         </div>
