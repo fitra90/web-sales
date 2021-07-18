@@ -19,13 +19,13 @@
                     <div class="form-group">
                         <label class="col-md-3 control-label" for="inputDefault">Name</label>
                         <div class="col-md-6">
-                            <input type="text" name="name" class="form-control" id="name" value="<?= isset($data) ? $data->name : ""; ?>">
+                            <input type="text" name="name" class="form-control" id="name" value="<?= isset($data) ? $data->name : ""; ?>" required>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-md-3 control-label" for="inputDefault">Stock</label>
                         <div class="col-md-6">
-                            <input type="number" name="stock" class="form-control stock" id="stock" value="<?= isset($data) ? $data->stock : ""; ?>">
+                            <input type="number" name="stock" class="form-control stock" id="stock" value="<?= isset($data) ? $data->stock : ""; ?>" required>
                         </div>
                     </div>
                     <div class="form-group">

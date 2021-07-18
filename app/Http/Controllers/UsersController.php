@@ -43,7 +43,14 @@ class UsersController extends Controller
     public function saveNew(Request $post)
     {
         $user = new User;
-        $data = $post->input();
+        $data = $post->validate([
+            'username' => 'required|string|unique:users,username',
+            'password' => 'required|string',
+            'name'  => 'string',
+            'stock' => 'numeric',
+            'status' => 'numeric', 
+            'role' => 'numeric'
+        ]);
         $user->name = $data['name'];
         $user->username = $data['username'];
         $user->status = $data['status'];
@@ -120,15 +127,36 @@ class UsersController extends Controller
         }
     }
 
+    public function apiLogin(Request $post)
+    {
+        $data = $post->input();
+        $user = User::where([['username', '=', $data['username']], ['password', '=', sha1($post['password'])]])->first();
+        if ($user && $user->status > 0 && $user->role == 2 && $user->status > 0) {
+            $token = $user->createToken('adminToken')->plainTextToken;
+            return Response(["message"=>"Logged in", "token" => $token], 200);
+        } else if ($user && $user->status > 0 && $user->role == 1 && $user->status > 0) {
+            $token = $user->createToken('staffToken')->plainTextToken;
+            return Response(["message"=>"Logged in", "token" => $token], 200);
+        } else {
+            return Response(["message"=>"Wrong username / password!"], 404);
+        }
+    }
+
     public function logout(Request $request)
     {
         $request->session()->flush();
         return redirect("/login");
     }
 
+    public function apiLogout(Request $request)
+    {
+        $request->user()->currentAccessToken()->delete();
+        return Response(["message" => "Logged out!"], 200);
+    }
+
     public function index()
     {
-        return Response($this->getAll());
+        return Response($this->getAll(), 200);
     }
 
     /**
