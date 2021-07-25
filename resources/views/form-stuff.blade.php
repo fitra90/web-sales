@@ -42,6 +42,10 @@
                                     <a href="#" class="btn btn-default fileupload-exists" data-dismiss="fileupload">Remove</a>
                                 </div>
                             </div>
+                            <br>
+
+                            <img src="{{$data->picture == '' ? '/assets/images/projects/project-5.jpg' : asset('storage/pictures/' . $data->picture )}}" width="200" class="img-responsive" alt="Project">
+
                         </div>
                     </div>
                     <div class="form-group">
@@ -92,14 +96,15 @@
 
 @section('js')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
+<script src="/assets/vendor/bootstrap-fileupload/bootstrap-fileupload.min.js"></script>
 @stop
 @section('customJS')
 <script type="text/javascript">
     function cancel() {
         location.href = "/stuffs"
     }
-    $('.price').mask('000.000.000.000.000,00', {
-        reverse: false
+    $('.price').mask('000.000.000.000.000', {
+        reverse: true
     });
 </script>
 @stop
