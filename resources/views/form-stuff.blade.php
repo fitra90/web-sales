@@ -37,15 +37,15 @@
                                     <span class="btn btn-default btn-file">
                                         <span class="fileupload-exists">Change</span>
                                         <span class="fileupload-new">Select file</span>
-                                        <input type="file" name="picture" />
+                                        <input type="file" name="picture" onchange="hidePreview()"/>
                                     </span>
                                     <a href="#" class="btn btn-default fileupload-exists" data-dismiss="fileupload">Remove</a>
                                 </div>
                             </div>
                             <br>
-
-                            <img src="{{$data->picture == '' ? '/assets/images/projects/project-5.jpg' : asset('storage/pictures/' . $data->picture )}}" width="200" class="img-responsive" alt="Project">
-
+                            @if(isset($data))
+                                <img class="preview" src="{{$data->picture == '' ? '/assets/images/projects/project-5.jpg' : asset('storage/pictures/' . $data->picture )}}" width="200" class="img-responsive" alt="Project">
+                            @endif
                         </div>
                     </div>
                     <div class="form-group">
@@ -100,12 +100,15 @@
 @stop
 @section('customJS')
 <script type="text/javascript">
+    
     function cancel() {
         location.href = "/stuffs"
     }
+    
     $('.price').mask('000.000.000.000.000', {
         reverse: true
     });
+
 </script>
 @stop
 @stop

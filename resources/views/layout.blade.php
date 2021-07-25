@@ -106,7 +106,7 @@
 											<span>Menu</span>
 										</a>
 									</li>
-									<li {!! Request::segment(1) == "stuffs" || Request::segment(1) == "new-stuff" || Request::segment(1) == "edit-stuff"?  "class='nav-active'" : "" !!}>
+									<li {!! Request::segment(1) == "orders" || Request::segment(1) == "new-order" || Request::segment(1) == "edit-stuff"?  "class='nav-active'" : "" !!}>
 										<a href="/stuffs">
                                             <i class="fa fa-table" aria-hidden="true"></i>
 											<span>Orders</span>

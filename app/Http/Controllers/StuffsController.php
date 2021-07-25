@@ -12,7 +12,7 @@ class StuffsController extends Controller
 
     public function getAll()
     {
-        return DB::table('stuffs')->paginate(3);
+        return DB::table('stuffs')->paginate(5);
     }
 
     public function viewAll(Request $request)
@@ -49,12 +49,8 @@ class StuffsController extends Controller
                 $storeName,
                 'public'
             );
-        } else {
-            $path = "";
         }
 
-        // print_r($path);
-        // die;
         $stuff->name = $data['name'];
         $stuff->stock = $data['stock'];
         $stuff->status = $data['status'];
@@ -73,10 +69,30 @@ class StuffsController extends Controller
     public function saveEdit(Request $post, $id)
     {
         $data = $post->input();
+        $file = $post->file('picture');
+        $old = Stuff::where('id', $id)->first();
+        $oldPicture = $old->picture;
+
+        if (isset($file)) {
+            $storeName = md5($file->getClientOriginalName()) . "." . $file->extension();
+            Storage::putFileAs(
+                'public/pictures',
+                $file,
+                $storeName,
+                'public'
+            );
+            Storage::delete('public/pictures/' . $oldPicture);
+        } else {
+            $storeName = $oldPicture;
+        }
+
         $update = Stuff::where('id', "=", $id)->update(array(
             'name' => $data['name'],
             'stock' => $data['stock'],
-            'status' => $data['status']
+            'status' => $data['status'],
+            'price' => $data['price'],
+            'picture' => $storeName,
+            'type' => $data['type']
         ));
         if ($update) {
             return redirect('/stuffs');
@@ -98,6 +114,7 @@ class StuffsController extends Controller
     public function delete($id)
     {
         $data  = Stuff::where('id', $id)->first();
+        Storage::delete('public/pictures/' . $data->picture);
         if ($data != null) {
             $data->delete();
             return true;
