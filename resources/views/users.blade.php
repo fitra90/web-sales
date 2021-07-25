@@ -29,7 +29,15 @@
                                 <td>{{$i}}</td>
                                 <td>{{$user->name}}</td>
                                 <td>{{$user->username}}</td>
-                                <td>{{$user->role == 1 ? "Admin" : "Staff"}}</td>
+                                <td>
+                                    @if($user->role == 1)
+                                        Admin
+                                    @elseif($user->role== 2)
+                                        Cashier
+                                    @else 
+                                        Waiter
+                                    @endif
+                                </td>
                                 <td>{{$user->status == 1 ? "Available" : "Not Available"}}</td>
                                 <td>
                                     <button class="btn btn-default" type="button" onclick='editUser(<?= $user->id; ?>)'>Edit</button>

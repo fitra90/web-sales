@@ -5,6 +5,9 @@
 <?php } else { ?>
     @section('title_section', 'New Stuff')
 <?php } ?>
+@section('css')
+<link rel="stylesheet" href="/assets/vendor/bootstrap-fileupload/bootstrap-fileupload.min.css" />
+@stop
 @section('content')
 
 <div class="row">
@@ -14,12 +17,37 @@
                 <h2 class="panel-title">Form</h2>
             </header>
             <div class="panel-body">
-                <form class="form-horizontal form-bordered" action="<?= isset($data) ? '/save-edit-stuff/'.$data->id : '/save-new-stuff'; ?>" method="POST">
+                <form class="form-horizontal form-bordered" action="<?= isset($data) ? '/save-edit-stuff/' . $data->id : '/save-new-stuff'; ?>" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
                         <label class="col-md-3 control-label" for="inputDefault">Name</label>
                         <div class="col-md-6">
                             <input type="text" name="name" class="form-control" id="name" value="<?= isset($data) ? $data->name : ""; ?>" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">File Upload</label>
+                        <div class="col-md-6">
+                            <div class="fileupload fileupload-new" data-provides="fileupload">
+                                <div class="input-append">
+                                    <div class="uneditable-input">
+                                        <i class="fa fa-file fileupload-exists"></i>
+                                        <span class="fileupload-preview"></span>
+                                    </div>
+                                    <span class="btn btn-default btn-file">
+                                        <span class="fileupload-exists">Change</span>
+                                        <span class="fileupload-new">Select file</span>
+                                        <input type="file" name="picture" />
+                                    </span>
+                                    <a href="#" class="btn btn-default fileupload-exists" data-dismiss="fileupload">Remove</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="inputDefault">Price</label>
+                        <div class="col-md-6">
+                            <input type="number" name="price" class="form-control price" id="price" value="<?= isset($data) ? $data->price : ""; ?>" required>
                         </div>
                     </div>
                     <div class="form-group">
@@ -49,10 +77,12 @@
         </section>
     </div>
 </div>
-
+@section('js')
+<script src="/assets/vendor/bootstrap-fileupload/bootstrap-fileupload.min.js"></script>
+@stop
 <script>
     function cancel() {
-        location.href="/stuffs"
+        location.href = "/stuffs"
     }
 </script>
 @stop

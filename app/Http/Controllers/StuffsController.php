@@ -4,12 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Stuff;
+use Illuminate\Support\Facades\DB;
 
 class StuffsController extends Controller
 {
     
     public function getAll() {
-        return Stuff::all();
+        return DB::table('stuffs')->paginate(3);
     }
 
     public function viewAll(Request $request) {

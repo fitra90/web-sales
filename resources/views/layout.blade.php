@@ -20,6 +20,8 @@
 		<link rel="stylesheet" href="/assets/vendor/bootstrap/css/bootstrap.css" />
 		<link rel="stylesheet" href="/assets/vendor/font-awesome/css/font-awesome.css" />
 
+		@yield('css')
+
 		<!-- Theme CSS -->
 		<link rel="stylesheet" href="/assets/stylesheets/theme.css" />
 
@@ -28,6 +30,7 @@
 
 		<!-- Theme Custom CSS -->
 		<link rel="stylesheet" href="/assets/stylesheets/theme-custom.css">
+
 
 		<!-- Head Libs -->
 		<script src="/assets/vendor/modernizr/modernizr.js"></script>
@@ -100,7 +103,13 @@
 									<li {!! Request::segment(1) == "stuffs" || Request::segment(1) == "new-stuff" || Request::segment(1) == "edit-stuff"?  "class='nav-active'" : "" !!}>
 										<a href="/stuffs">
                                             <i class="fa fa-table" aria-hidden="true"></i>
-											<span>Stuffs</span>
+											<span>Menu</span>
+										</a>
+									</li>
+									<li {!! Request::segment(1) == "stuffs" || Request::segment(1) == "new-stuff" || Request::segment(1) == "edit-stuff"?  "class='nav-active'" : "" !!}>
+										<a href="/stuffs">
+                                            <i class="fa fa-table" aria-hidden="true"></i>
+											<span>Orders</span>
 										</a>
 									</li>
 									@if(Session::get('role') == 1)
@@ -151,5 +160,6 @@
 		<!-- Theme Initialization Files -->
 		<script src="/assets/javascripts/theme.init.js"></script>
 
+		@yield('js')
 	</body>
 </html>
