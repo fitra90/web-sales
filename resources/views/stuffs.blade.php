@@ -42,17 +42,17 @@
                             <tr>
                                 <td>{{$i}}</td>
                                 <td>{{$stuff->name}}</td>
-                                <td>{{$stuff->stock}}</td>
+                                <td>{{$stuff->price}}</td>
                                 <td>
                                     <div class="thumb-preview">
-                                        <a class="thumb-image" href="/assets/images/projects/project-5.jpg">
-                                            <img src="/assets/images/projects/project-5.jpg" width="100" class="img-responsive" alt="Project">
+                                        <a class="thumb-image" href="{{$stuff->picture == '' ? '/assets/images/projects/project-5.jpg' : asset('storage/pictures/' . $stuff->picture )}}">
+                                            <img src="{{$stuff->picture == '' ? '/assets/images/projects/project-5.jpg' : asset('storage/pictures/' . $stuff->picture )}}" width="100" class="img-responsive" alt="Project">
                                         </a>
 
                                     </div>
 
                                 </td>
-                                <td>{{$stuff->stock}}</td>
+                                <td>{{$stuff->type == "1" ? "Food" : "Drink"}}</td>
                                 <td>{{$stuff->stock}}</td>
                                 <td>{{$stuff->status == 1 ? "Available" : "Not Available"}}</td>
                                 @if(Session::get('role') == 1)

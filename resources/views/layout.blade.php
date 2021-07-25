@@ -161,5 +161,6 @@
 		<script src="/assets/javascripts/theme.init.js"></script>
 
 		@yield('js')
+		@yield('customJS')
 	</body>
 </html>

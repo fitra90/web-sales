@@ -12,6 +12,9 @@ class Stuff extends Model
         'name',
         'stock',
         'status',
+        'picture',
+        'price',
+        'type',
     ];
 
 }
