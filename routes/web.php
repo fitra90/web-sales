@@ -35,6 +35,7 @@ Route::post('/save-new-order', [OrdersController::class, 'saveNew']);
 Route::post('/save-edit-order/{id}', [OrdersController::class, 'saveEdit']);
 Route::get('/edit-order/{id}', [OrdersController::class, 'viewEdit']);
 Route::delete('/delete-order/{id}', [OrdersController::class, 'delete']);
+Route::get('/last-order', [OrdersController::class, 'lastOrder']);
 
 // 
 //  user CRUD

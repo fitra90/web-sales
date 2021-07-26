@@ -116,10 +116,10 @@ class UsersController extends Controller
         $user = User::where([['username', '=', $data['username']], ['password', '=', sha1($post['password'])]])->first();
         if ($user && $user->status > 0 && $user->role == 2 && $user->status > 0) {
 
-            session(['username' => $user->username, 'role' => '2', 'name' => $user->name, 'login' => true]);
+            session(['username' => $user->username, 'role' => '2', 'name' => $user->name, 'user_id' => $user->id, 'login' => true]);
             return redirect()->action([StuffsController::class, 'viewAll']);
         } else if ($user && $user->status > 0 && $user->role == 1 && $user->status > 0) {
-            session(['username' => $user->username, 'role' => '1', 'name' => $user->name, 'login' => true]);
+            session(['username' => $user->username, 'role' => '1', 'name' => $user->name,  'user_id' => $user->id, 'login' => true]);
             return redirect()->action([StuffsController::class, 'viewAll']);
         } else {
             session()->flash('error', '');

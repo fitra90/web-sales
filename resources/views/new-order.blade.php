@@ -55,7 +55,7 @@
         <section class="panel">
             <header class="panel-heading">
                 <a href="/new-order">
-                    <button type="button" class="btn btn-lg btn-info">View Order</button>
+                    <button type="button" class="btn btn-lg btn-info">View All Order</button>
                 </a>
             </header>
             <div class="panel-body">
@@ -68,21 +68,25 @@
                     </ul>
                     @endif
                     <div class="row">
+                        <div class="col-md-12">
+                            <input class="form-control input-lg mb-md no-meja" type="text" placeholder="No. Meja" required>
+                        </div>
                         <div class="col-md-12 table-order">
                             <div class="table-responsive" style="margin-bottom:20px;">
-                                <h4 class="panel-title">Order List</h4>
+                                <h4 class="panel-title">Order Item</h4>
                                 <table class="table table-striped mb-none">
                                     <thead>
                                         <tr>
                                             <th>Name</th>
                                             <th>Price</th>
-                                            <th>Picture</th>
                                             <th>Type</th>
+                                            <th>Amount</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody></tbody>
                                 </table>
+                                <button type="button" class="btn btn-lg btn-success" onclick="saveOrder()">Process Order</button>
                             </div>
                         </div>
                         @foreach ($menus as $menu)
@@ -123,6 +127,8 @@
 <script>
     $(document).ready(function() {
         $('.table-order').hide();
+        var orderItem = [];
+        localStorage.setItem('orderItem', JSON.stringify(orderItem));
     });
 
     function add(id) {
@@ -134,19 +140,27 @@
                 type: 'GET'
             }).done(function(response) {
                 if (response) {
-                    $row = "";
-                    $row += `
-                                <tr id='${response.data.id}'>
-                                    <td>${response.data.name}</td>
-                                    <td>${response.data.price}</td>
-                                    <td>${response.data.picture}</td>
-                                    <td>${response.data.type}</td>
-                                    <td>
-                                        <button type="button" class="btn btn-danger" onclick="removeOrderItem(${response.data.id})">Remove</button>
-                                    </td>
-                                </tr>
-                            `
-                    $('tbody').append($row)
+                    var orderItem = JSON.parse(localStorage.getItem('orderItem'))
+                    response.data.amount = amount
+                    orderItem.push(response.data);
+                    localStorage.setItem('orderItem', JSON.stringify(orderItem))
+                    console.log(orderItem)
+                    var row = "";
+
+                    orderItem.map(item => {
+                        row += `
+                            <tr class='${item.id}'>
+                                <td>${item.name}</td>
+                                <td>${item.price}</td>
+                                <td>${item.type == 1 ? 'Food' : 'Drink'}</td>
+                                <td>${item.amount}</td>
+                                <td>
+                                    <button type="button" class="btn btn-danger" onclick="removeOrderItem(${item.id})">Remove</button>
+                                </td>
+                            </tr>
+                        `
+                    })
+                    $('tbody').html(row)
 
                 } else {
                     alert("Failed to load data");
@@ -156,28 +170,58 @@
 
     }
 
-    function removeOrderItem(id) {
-        $('#'.id).remove();
+    function removeOrderItem(idToRemove) {
+        var orderItem = JSON.parse(localStorage.getItem('orderItem'))
+        var newOrderItem = []
+
+        orderItem.map(item => {
+            item.id != idToRemove ? newOrderItem.push(item) : ""
+        })
+
+        newOrderItem.length == 0 ? $('.table-order').hide() : ""
+        localStorage.setItem('orderItem', JSON.stringify(newOrderItem))
+        $('.' + idToRemove).empty();
+        console.log(JSON.stringify(newOrderItem))
     }
 
     function saveOrder() {
-        $data = localStorage.getItem('order')
+        var data = JSON.parse(localStorage.getItem('orderItem'))
+        var lastOrder = 0;
+
+        //get latest order no
         $.ajax({
-            url: '/save-order/',
+            url: '/last-order/',
+            type: 'GET'
+        }).done(function(response) {
+            // console.log(response)
+            if (response.data != null) {
+                lastOrder = response.data.order_code_number;
+            }
+        })
+
+        var noMeja = $('.no-meja').val()
+        data.push({
+            'noMeja': noMeja == '' ? 1 : noMeja,
+            'orderCodeNo': lastOrder,
+        })
+
+        //save new order
+        $.ajax({
+            url: '/save-new-order/',
             type: 'POST',
             data: {
-                'id': id,
-                'data': data,
+                'data': JSON.stringify(data),
                 '_token': '{{ csrf_token() }}',
             }
         }).done(function(response) {
             // console.log(response)
             if (response) {
-                location.reload()
+                // location.reload()
             } else {
                 alert("Failed to delete data");
             }
         })
+
     }
 
     (function($) {
