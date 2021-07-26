@@ -35,7 +35,8 @@
 		<!-- Head Libs -->
 		<script src="/assets/vendor/modernizr/modernizr.js"></script>
 		<script src="/assets/vendor/jquery/jquery.js"></script>
-
+		
+		@yield('customCSS')
 	</head>
 	<body>
 		<section class="body">
@@ -100,14 +101,20 @@
 						<div class="nano-content">
 							<nav id="menu" class="nav-main" role="navigation">
 								<ul class="nav nav-main">
-									<li {!! Request::segment(1) == "stuffs" || Request::segment(1) == "new-stuff" || Request::segment(1) == "edit-stuff"?  "class='nav-active'" : "" !!}>
-										<a href="/stuffs">
+									<li {!! Request::segment(1) == "menu" ?  "class='nav-active'" : "" !!}>
+										<a href="/menu">
                                             <i class="fa fa-table" aria-hidden="true"></i>
 											<span>Menu</span>
 										</a>
 									</li>
-									<li {!! Request::segment(1) == "orders" || Request::segment(1) == "new-order" || Request::segment(1) == "edit-stuff"?  "class='nav-active'" : "" !!}>
+									<li {!! Request::segment(1) == "stuffs" || Request::segment(1) == "new-stuff" || Request::segment(1) == "edit-stuff"?  "class='nav-active'" : "" !!}>
 										<a href="/stuffs">
+                                            <i class="fa fa-table" aria-hidden="true"></i>
+											<span>Master Menu</span>
+										</a>
+									</li>
+									<li {!! Request::segment(1) == "orders" || Request::segment(1) == "new-order" || Request::segment(1) == "edit-order"?  "class='nav-active'" : "" !!}>
+										<a href="/orders">
                                             <i class="fa fa-table" aria-hidden="true"></i>
 											<span>Orders</span>
 										</a>

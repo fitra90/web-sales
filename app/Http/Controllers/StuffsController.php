@@ -25,6 +25,16 @@ class StuffsController extends Controller
         }
     }
 
+    public function viewMenu(Request $request)
+    {
+        if ($request->session()->has('login')) {
+            $data = Stuff::all();
+            return view('menu', ['data' => $data, 'session' => $request->session()->all()]);
+        } else {
+            return redirect('/login');
+        }
+    }
+
     public function viewNew(Request $request)
     {
         if ($request->session()->has('login') && session('role') == 1) {
@@ -108,6 +118,16 @@ class StuffsController extends Controller
             return view('form-stuff', ['data' => $data]);
         } else {
             return redirect('/stuffs');
+        }
+    }
+
+    public function viewSingle(Request $request, $id)
+    {
+        if ($request->session()->has('login') &&  session('role') == 1) {
+            $data  = Stuff::where('id', $id)->first();
+            return Response(['data' => $data], 200);
+        } else {
+            return Response(['message' => "Not Found"], 404);
         }
     }
 

@@ -1,5 +1,5 @@
 @extends('layout')
-@section('title', 'Admin Dashboard')
+@section('title', 'Form User')
 <?php if (isset($data)) { ?>
     @section('title_section', 'Edit User')
 <?php } else { ?>
