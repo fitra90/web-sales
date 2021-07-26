@@ -41,9 +41,9 @@
                             <tr>
                                 <td>{{$i}}</td>
                                 <td>{{$stuff->order_code}}</td>
-                                <td>{{$stuff->is_paid == 0 ? "Not Paid" : "Paid"}}</td>
                                 <td>{{$stuff->table_number}}</td>
                                 <td>{{$stuff->status == "1" ? "Active" : "Completed"}}</td>
+                                <td>{{$stuff->is_paid == 0 ? "Not Paid" : "Paid"}}</td>
                                 <td><?php $date = date_create($stuff->created_at);
                                     echo date_format($date, "h:i A D d/m/y"); ?></td>
                                 @if(Session::get('role') == 1)
@@ -70,7 +70,7 @@
 @stop
 <script>
     function deleteStuff(id) {
-        var r = confirm("Are you sure want to delete this stuff?");
+        var r = confirm("Are you sure want to delete this order?");
         if (r == true) {
             // txt = "You pressed OK!";
             yesDelete(id)

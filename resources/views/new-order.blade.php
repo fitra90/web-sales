@@ -216,7 +216,7 @@
         }).done(function(response) {
             // console.log(response)
             if (response) {
-                // location.reload()
+                location.href="/orders"
             } else {
                 alert("Failed to delete data");
             }
